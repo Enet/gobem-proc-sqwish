@@ -4,10 +4,11 @@ var sqwish = require('sqwish'),
     redis = require('redis');
 
 module.exports = function () {
-    let client = redis.createClient();
+    let client;
 
     return {
         before: function (next) {
+            client = redis.createClient();
             client.expire('sqwish', 86400);
             next();
         },
