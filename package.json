@@ -1,0 +1,35 @@
+{
+    "name": "gobem-proc-sqwish",
+    "version": "0.0.1",
+    "description": "Processor to minify CSS files for gobem builder.",
+    "main": "index.js",
+    "dependencies": {
+        "sqwish": "*",
+        "redis": "*"
+    },
+    "peerDependencies": {
+        "gobem": "*"
+    },
+    "keywords": [
+        "gobem",
+        "processor",
+        "minifier",
+        "css",
+        "style",
+        "compressor",
+        "sqwish"
+    ],
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": {
+        "name": "Stepan Zhevak",
+        "email": "enet@protonmail.ch",
+        "url": "zhevak.name"
+    },
+    "repository": "https://github.com/Enet/gobem-proc-sqwish",
+    "license": "GPLv3",
+    "engines": {
+        "node": ">=4.0.0"
+    }
+}
