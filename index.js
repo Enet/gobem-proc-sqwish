@@ -26,7 +26,7 @@ module.exports = function () {
             });
         },
 
-        after: function (next) {
+        clear: function (next) {
             client.end();
             next();
         }
