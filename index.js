@@ -35,7 +35,7 @@ module.exports = function (options) {
         },
 
         clear: function (next) {
-            options.redisClient && client.end();
+            !options.redisClient && client.end();
             next();
         }
     };
