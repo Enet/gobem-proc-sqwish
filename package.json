@@ -1,11 +1,11 @@
 {
     "name": "gobem-proc-sqwish",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "Processor to minify CSS files for gobem builder.",
     "main": "index.js",
     "dependencies": {
         "sqwish": "*",
-        "redis": "*"
+        "xxhash": "*"
     },
     "peerDependencies": {
         "gobem": "*"

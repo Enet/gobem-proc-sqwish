@@ -1,42 +1,34 @@
 'use strict';
 
-var sqwish = require('sqwish'),
-    redis = require('redis');
+var path = require('path'),
+    fs = require('fs'),
+    sqwish = require('sqwish'),
+    xxhash = require('xxhash');
 
 module.exports = function (options) {
     options = options || {};
 
-    let client = options.redisClient,
-        key = options.redisKey || 'gobem-proc-sqwish';
-
     return {
-        before: function (next) {
-            client = client || redis.createClient(options.redisOptions);
-            client.expire(key, 86400);
-            next();
-        },
+        process: function (next, input, output, config, rawContent, rawPath) {
+            if (!rawContent) return next();
 
-        process: function (next, input, output, config, content, path) {
-            if (!content) return next();
-            client.hget(key, content, function (error, reply) {
-                if (reply === null) {
+            let key = xxhash.hash(new Buffer(rawContent), 0xCAFEBABE) + '',
+                filePath = path.join(options.cacheDir + '', 'gobem-proc-sqwish^' + key);
+
+            fs.readFile(filePath, 'utf8', (error, fileContent) => {
+                if (error) {
                     try {
-                        output.set(path, sqwish.minify(content));
-                        client.hset(key, content, output.get(path), next);
+                        output.set(rawPath, sqwish.minify(rawContent));
+                        fs.writeFile(filePath, output.get(rawPath), next);
                     } catch (error) {
-                        output.set(path, content);
+                        output.set(rawPath, rawContent);
                         next(options.ignoreErrors ? null : error);
                     }
                 } else {
-                    output.set(path, reply);
+                    output.set(rawPath, fileContent);
                     next();
                 }
             });
-        },
-
-        clear: function (next) {
-            !options.redisClient && client.end();
-            next();
         }
     };
 };
