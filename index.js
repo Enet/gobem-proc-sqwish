@@ -3,7 +3,7 @@
 var path = require('path'),
     fs = require('fs'),
     sqwish = require('sqwish'),
-    xxhash = require('xxhash');
+    xxhash = global[Symbol.for('xxhash')] = global[Symbol.for('xxhash')] || require('xxhash');
 
 module.exports = function (options) {
     options = options || {};
