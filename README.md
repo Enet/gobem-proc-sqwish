@@ -1,4 +1,7 @@
 # gobem-proc-sqwish
+**DON'T USE THE PACKAGE. IT'S DEPRECATED!!!
+USE [webpack](https://github.com/webpack) INSTEAD.**
+
 This processor for [gobem](https://github.com/Enet/gobem) minifies CSS files using **sqwish**. All options are passed as a single object. **gobem-proc-sqwish** requires directory to cache results of the work.
 
 The following options are supported:
