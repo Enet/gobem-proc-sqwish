@@ -3,7 +3,7 @@
 var path = require('path'),
     fs = require('fs'),
     sqwish = require('sqwish'),
-    xxhash = global[Symbol.for('xxhash')] = global[Symbol.for('xxhash')] || require('xxhash');
+    crypto = require('crypto');
 
 module.exports = function (options) {
     options = options || {};
@@ -12,7 +12,7 @@ module.exports = function (options) {
         process: function (next, input, output, config, rawContent, rawPath) {
             if (!rawContent) return next();
 
-            let key = xxhash.hash(new Buffer(rawContent), 0xCAFEBABE) + '',
+            let key = crypto.createHash('md5').update(rawContent).digest('hex'),
                 filePath = path.join(options.cacheDir + '', 'gobem-proc-sqwish^' + key);
 
             fs.readFile(filePath, 'utf8', (error, fileContent) => {
